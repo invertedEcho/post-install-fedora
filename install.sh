@@ -2,8 +2,9 @@
 set -e
 
 mkdir -p ~/.local/bin
+mkdir -p ~/dev
 
-sudo dnf install neovim kitty zsh python3-pip trash-cli
+sudo dnf install neovim kitty zsh python3-pip trash-cli gnome-tweaks
 
 flatpak install flathub com.spotify.Client
 
@@ -79,7 +80,13 @@ else
 	echo "lazygit already installed, skipping"
 fi
 
-pip install pyright
+if ! command -v pyright >/dev/null 2>&1
+then
+	echo "Installing pyright"
+	pip install pyright
+else
+	echo "pyright already installed, skipping"
+fi
 
 # TODO: only do if font not yet installed
 mkdir -p ~/.local/share/fonts
@@ -90,4 +97,23 @@ sudo dnf install zsh-syntax-highlighting zsh-autosuggestions zoxide
 mkdir -p "$HOME/.zsh"
 sudo npm install --global pure-prompt
 
-# TODO: clone dotfiles repo and run ./install
+# dotfiles
+if [ -d "~/dev/dotfiles" ]; then
+	git clone git@github.com:invertedEcho/dotfiles.git ~/dev/dotfiles
+fi
+cd ~/dev/dotfiles
+./install
+cd -
+
+# gtk
+sudo dnf install gtk-murrine-engine
+cd ~/dev/
+
+if [ -d "~/dev/Gruvbox-GTK-Theme" ]; then
+	git clone https://github.com/Fausto-Korpsvart/Gruvbox-GTK-Theme
+fi
+
+cd Gruvbox-GTK-Theme/themes
+./install.sh
+cp -r ~/.themes/Gruvbox-Dark/gtk-4.0/* ~/.config/gtk-4.0/
+cd -
