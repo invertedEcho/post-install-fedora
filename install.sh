@@ -151,5 +151,8 @@ if [ ! -d "/home/invertedecho/.config/nvim" ]; then
 	ln -s /home/invertedecho/dev/nvim-config /home/invertedecho/.config/nvim
 fi
 
+echo "Enabling resize-with-right-button for gnome"
+gsettings set org.gnome.desktop.wm.preferences resize-with-right-button true
+
 echo "Post-install sucessfully completed!"
 echo "Please log-out and log in to apply all changes."
