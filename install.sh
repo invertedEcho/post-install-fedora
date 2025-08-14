@@ -93,6 +93,8 @@ else
 	echo "pyright already installed, skipping"
 fi
 
+rustup component add rust-analyzer
+
 if ! command -v 1password >/dev/null 2>&1
 then
 	echo "Installing 1password"
