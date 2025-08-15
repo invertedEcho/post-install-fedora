@@ -7,7 +7,7 @@ mkdir -p ~/.config/gtk-4.0
 
 export PATH=$PATH:/home/$USER/.local/bin/
 
-sudo dnf install neovim kitty zsh python3-pip trash-cli gnome-tweaks
+sudo dnf install neovim kitty zsh python3-pip trash-cli gnome-tweaks wine
 
 flatpak install flathub com.spotify.Client
 
