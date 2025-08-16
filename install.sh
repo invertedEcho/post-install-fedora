@@ -9,7 +9,7 @@ export PATH=$PATH:/home/$USER/.local/bin/
 
 sudo dnf install neovim kitty zsh python3-pip trash-cli gnome-tweaks wine
 
-flatpak install flathub com.spotify.Client
+flatpak install flathub com.spotify.Client info.cemu.Cemu
 
 if [ $SHELL != "/usr/bin/zsh" ]; then
 	chsh -s /usr/bin/zsh
