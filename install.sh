@@ -7,9 +7,27 @@ mkdir -p ~/.config/gtk-4.0
 
 export PATH=$PATH:/home/$USER/.local/bin/
 
-sudo dnf install neovim kitty zsh python3-pip trash-cli gnome-tweaks wine
+sudo dnf install neovim kitty zsh python3-pip trash-cli gnome-tweaks wine gnome-extensions-app
 
-flatpak install flathub com.spotify.Client info.cemu.Cemu
+flatpak install info.cemu.Cemu
+
+echo "Enabling RPM fusion repoistory"
+sudo dnf install \
+  https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+
+sudo dnf install \
+  https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+
+if ! command -v spotify >/dev/null 2>&1
+then
+	echo "Installing lpf-spotify-client"
+	sudo dnf install lpf-spotify-client
+
+	echo "Installing spotify by running lpf update"
+	lpf update
+else
+	echo "Spotify already installed, skipping..."
+fi
 
 if [ $SHELL != "/usr/bin/zsh" ]; then
 	chsh -s /usr/bin/zsh
@@ -153,6 +171,8 @@ if [ ! -d "/home/invertedecho/.config/nvim" ]; then
 	ln -s /home/invertedecho/dev/nvim-config /home/invertedecho/.config/nvim
 fi
 
+echo "Enabling minimize, maximize and close buttons for window tiltebars"
+gsettings set org.gnome.desktop.wm.preferences button-layout ":minimize,maximize,close"
 echo "Enabling resize-with-right-button for gnome"
 gsettings set org.gnome.desktop.wm.preferences resize-with-right-button true
 
