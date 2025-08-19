@@ -7,15 +7,15 @@ mkdir -p ~/.config/gtk-4.0
 
 export PATH=$PATH:/home/$USER/.local/bin/
 
-sudo dnf install neovim kitty zsh python3-pip trash-cli gnome-tweaks wine gnome-extensions-app
+sudo dnf install -y neovim kitty zsh python3-pip trash-cli gnome-tweaks wine gnome-extensions-app
 
 flatpak install info.cemu.Cemu
 
 echo "Enabling RPM fusion repoistory"
-sudo dnf install \
+sudo dnf install -y \
   https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
 
-sudo dnf install \
+sudo dnf install -y \
   https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
 if ! command -v spotify >/dev/null 2>&1
@@ -98,7 +98,7 @@ if ! command -v lazygit >/dev/null 2>&1
 then
 	echo "Installing lazygit"
 	sudo dnf copr enable dejan/lazygit
-	sudo dnf install lazygit
+	sudo dnf install -y lazygit
 else
 	echo "lazygit already installed, skipping"
 fi
