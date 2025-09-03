@@ -7,7 +7,7 @@ mkdir -p ~/.config/gtk-4.0
 
 export PATH=$PATH:/home/$USER/.local/bin/
 
-sudo dnf install -y neovim kitty zsh python3-pip trash-cli gnome-tweaks wine gnome-extensions-app
+sudo dnf install -y neovim kitty zsh python3-pip trash-cli wine gimp audacity
 
 flatpak install info.cemu.Cemu
 
@@ -171,10 +171,14 @@ if [ ! -d "/home/invertedecho/.config/nvim" ]; then
 	ln -s /home/invertedecho/dev/nvim-config /home/invertedecho/.config/nvim
 fi
 
-echo "Enabling minimize, maximize and close buttons for window tiltebars"
-gsettings set org.gnome.desktop.wm.preferences button-layout ":minimize,maximize,close"
-echo "Enabling resize-with-right-button for gnome"
-gsettings set org.gnome.desktop.wm.preferences resize-with-right-button true
+if ! command -v desktopeditors >/dev/null 2>&1
+then
+	echo "Downloading and installing ONLYOFFICE"
+	wget https://github.com/ONLYOFFICE/DesktopEditors/releases/latest/download/onlyoffice-desktopeditors.x86_64.rpm -O /tmp/onlyoffice.rpm
+	sudo dnf install /tmp/onlyoffice.rpm
+else
+	echo "ONLYOFFICE already installed, skipping"
+fi
 
 echo "Post-install sucessfully completed!"
 echo "Please log-out and log in to apply all changes."
