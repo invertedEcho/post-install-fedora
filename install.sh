@@ -129,7 +129,14 @@ fi
 # zsh
 sudo dnf install zsh-syntax-highlighting zsh-autosuggestions zoxide
 mkdir -p "$HOME/.zsh"
-sudo npm install --global pure-prompt
+
+if ! npm list -g | grep pure-prompt
+then
+	echo "Installing pure-prompt..."
+	sudo npm install --global pure-prompt
+else
+	echo "pure-prompt already installed, skipping"
+fi
 
 # dotfiles
 if [ ! -d "/home/invertedecho/dev/dotfiles" ]; then
