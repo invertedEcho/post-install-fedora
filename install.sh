@@ -9,7 +9,9 @@ export PATH=$PATH:/home/$USER/.local/bin/
 
 sudo dnf install -y neovim kitty zsh python3-pip trash-cli wine gimp audacity
 
-flatpak install info.cemu.Cemu
+if grep -q home-pc /etc/hostname; then
+	flatpak install info.cemu.Cemu
+fi
 
 echo "Enabling RPM fusion repoistory"
 sudo dnf install -y \
