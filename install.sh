@@ -1,13 +1,57 @@
 #!/bin/sh
 set -e
 
+# Functions for installing programs
+check_if_program_installed() {
+	local command_name=$1
+	if ! command -v $command_name >/dev/null 2>&1
+	then
+		echo "Installing $command_name..."
+		return 1
+	else
+		echo "Skipping installation of $command_name as its already installed."
+		return 0
+	fi
+}
+
+install_spotify() {
+	sudo dnf install -y lpf-spotify-client
+	lpf update
+}
+
+install_lua_language_server() {
+	wget https://github.com/LuaLS/lua-language-server/releases/download/3.15.0/lua-language-server-3.15.0-linux-x64.tar.gz mkdir -p lua-language-server
+	cd lua-language-server
+	tar xf ../lua-language-server-3.15.0-linux-x64.tar.gz
+	cd ..
+	rm lua-language-server-3.15.0-linux-x64.tar.gz
+	mv lua-language-server ~/.local/bin/
+	echo "export PATH=$PATH:/home/invertedecho/.local/bin/lua-language-server/bin" >> ~/.zshrc
+	rm -r lua-language-server
+}
+
+install_cargo() {
+	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+	source ~/.cargo/env
+}
+
+install_onlyoffice() {
+	wget https://github.com/ONLYOFFICE/DesktopEditors/releases/latest/download/onlyoffice-desktopeditors.x86_64.rpm -O /tmp/onlyoffice.rpm
+	sudo dnf install /tmp/onlyoffice.rpm
+}
+
+# Base stuff
+if [ $SHELL != "/usr/bin/zsh" ]; then
+	chsh -s /usr/bin/zsh
+else
+	echo "shell already set to zsh, skipping..."
+fi
+
 mkdir -p ~/.local/bin
 mkdir -p ~/dev
 mkdir -p ~/.config/gtk-4.0
 
 export PATH=$PATH:/home/$USER/.local/bin/
-
-sudo dnf install -y neovim kitty zsh python3-pip trash-cli wine gimp audacity redshift
 
 if grep -q home-pc /etc/hostname; then
 	flatpak install info.cemu.Cemu
@@ -18,6 +62,10 @@ if grep -q laptop /etc/hostname; then
 	sudo dnf install -y brightnessctl
 fi
 
+sudo dnf copr enable -y dejan/lazygit
+sudo dnf copr enable -y solopasha/hyprland
+sudo dnf install -y neovim kitty zsh python3-pip trash-cli wine gimp audacity redshift lazygit waypaper gtk-murrine-engine
+
 echo "Enabling RPM fusion repoistory"
 sudo dnf install -y \
   https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
@@ -25,100 +73,24 @@ sudo dnf install -y \
 sudo dnf install -y \
   https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
-if ! command -v spotify >/dev/null 2>&1
-then
-	echo "Installing lpf-spotify-client"
-	sudo dnf install lpf-spotify-client
 
-	echo "Installing spotify by running lpf update"
-	lpf update
-else
-	echo "Spotify already installed, skipping..."
-fi
+check_if_program_installed "spotify" || install_spotify
 
-if [ $SHELL != "/usr/bin/zsh" ]; then
-	chsh -s /usr/bin/zsh
-else
-	echo "shell already set to zsh, skipping..."
-fi
+check_if_program_installed "lua-language-server" || install_lua_language_server
 
-if ! command -v lua-language-server >/dev/null 2>&1
-then
-	echo "lua-language-server not installed, installing"
-	wget https://github.com/LuaLS/lua-language-server/releases/download/3.15.0/lua-language-server-3.15.0-linux-x64.tar.gz
-	mkdir -p lua-language-server
-	cd lua-language-server
-	tar xf ../lua-language-server-3.15.0-linux-x64.tar.gz
-	cd ..
-	rm lua-language-server-3.15.0-linux-x64.tar.gz
-	mv lua-language-server ~/.local/bin/
-	echo "export PATH=$PATH:/home/invertedecho/.local/bin/lua-language-server/bin" >> ~/.zshrc
-	rm -r lua-language-server
-else
-	echo "lua-language-server already installed, skipping"
-fi
+check_if_program_installed "cargo" || install_cargo
 
-if ! command -v cargo >/dev/null 2>&1
-then
-	echo "Installing cargo and rustc via rustup"
-	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-	source ~/.cargo/env
-else
-	echo "Cargo and rust already installed, skipping..."
-fi
+check_if_program_installed "stylua" || cargo install stylua
 
-if ! command -v stylua >/dev/null 2>&1
-then
-	echo "Installing stylua with cargo"
-	cargo install stylua
-else
-	echo "stylua already installed, skipping"
-fi
+check_if_program_installed "black" || pip install black
 
-if ! command -v black >/dev/null 2>&1
-then
-	echo "Installing black with pip"
-	pip install black
-else
-	echo "black already installed, skipping"
-fi
+check_if_program_installed "prettierd" || sudo npm install -g @fsouza/prettierd
 
-if ! command -v alejandra >/dev/null 2>&1
-then
-	echo "Installing alejandra"
-	wget https://github.com/kamadorueda/alejandra/releases/download/4.0.0/alejandra-x86_64-unknown-linux-musl
-	mv alejandra-x86_64-unknown-linux-musl ~/.local/bin/alejandra
-	chmod +x ~/.local/bin/alejandra
-else
-	echo "alejandra already installed, skipping"
-fi
+check_if_program_installed "pyright" || pip install pyright
 
-if ! command -v prettierd >/dev/null 2>&1
-then
-	echo "Installing prettierd with npm"
-	sudo npm install -g @fsouza/prettierd
-else
-	echo "prettierd already installed"
-fi
+check_if_program_installed "desktopeditors" || install_onlyoffice
 
-if ! command -v lazygit >/dev/null 2>&1
-then
-	echo "Installing lazygit"
-	sudo dnf copr enable dejan/lazygit
-	sudo dnf install -y lazygit
-else
-	echo "lazygit already installed, skipping"
-fi
-
-if ! command -v pyright >/dev/null 2>&1
-then
-	echo "Installing pyright"
-	pip install pyright
-else
-	echo "pyright already installed, skipping"
-fi
-
-rustup component add rust-analyzer
+check_if_program_installed "rust-analyzer" || rustup component add rust-analyzer
 
 # font
 mkdir -p ~/.local/share/fonts
@@ -154,9 +126,6 @@ rm -f ~/.zshrc
 ./install
 cd -
 
-# gtk
-sudo dnf install gtk-murrine-engine
-
 if [ ! -d "/home/invertedecho/dev/Gruvbox-GTK-Theme" ]; then
 	git clone https://github.com/Fausto-Korpsvart/Gruvbox-GTK-Theme ~/dev/Gruvbox-GTK-Theme
 fi
@@ -173,24 +142,6 @@ fi
 if [ ! -d "/home/invertedecho/.config/nvim" ]; then
 	echo "nvim-config not existing, setting up"
 	ln -s /home/invertedecho/dev/nvim-config /home/invertedecho/.config/nvim
-fi
-
-if ! command -v desktopeditors >/dev/null 2>&1
-then
-	echo "Downloading and installing ONLYOFFICE"
-	wget https://github.com/ONLYOFFICE/DesktopEditors/releases/latest/download/onlyoffice-desktopeditors.x86_64.rpm -O /tmp/onlyoffice.rpm
-	sudo dnf install /tmp/onlyoffice.rpm
-else
-	echo "ONLYOFFICE already installed, skipping"
-fi
-
-if ! command -v waypaper >/dev/null 2>&1
-then
-	echo "Installing waypaper..."
-	sudo dnf copr enable -y solopasha/hyprland
-	sudo dnf install -y waypaper
-else
-	echo "waypaper already installed, skipping"
 fi
 
 echo "Post-install sucessfully completed!"
