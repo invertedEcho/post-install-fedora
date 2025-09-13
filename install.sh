@@ -184,5 +184,14 @@ else
 	echo "ONLYOFFICE already installed, skipping"
 fi
 
+if ! command -v waypaper >/dev/null 2>&1
+then
+	echo "Installing waypaper..."
+	sudo dnf copr enable -y solopasha/hyprland
+	sudo dnf install -y waypaper
+else
+	echo "waypaper already installed, skipping"
+fi
+
 echo "Post-install sucessfully completed!"
 echo "Please log-out and log in to apply all changes."
