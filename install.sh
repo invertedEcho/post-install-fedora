@@ -7,10 +7,15 @@ mkdir -p ~/.config/gtk-4.0
 
 export PATH=$PATH:/home/$USER/.local/bin/
 
-sudo dnf install -y neovim kitty zsh python3-pip trash-cli wine gimp audacity
+sudo dnf install -y neovim kitty zsh python3-pip trash-cli wine gimp audacity redshift
 
 if grep -q home-pc /etc/hostname; then
 	flatpak install info.cemu.Cemu
+fi
+
+if grep -q laptop /etc/hostname; then
+	echo "laptop detected, installing brightnessctl"
+	sudo dnf install -y brightnessctl
 fi
 
 echo "Enabling RPM fusion repoistory"
