@@ -40,6 +40,12 @@ install_onlyoffice() {
 	sudo dnf install /tmp/onlyoffice.rpm
 }
 
+install_i3lock_fancy() {
+	git clone https://github.com/meskarune/i3lock-fancy.git
+	cd i3lock-fancy
+	sudo make install
+}
+
 # Base stuff
 if [ $SHELL != "/usr/bin/zsh" ]; then
 	chsh -s /usr/bin/zsh
@@ -64,7 +70,7 @@ fi
 
 sudo dnf copr enable -y dejan/lazygit
 sudo dnf copr enable -y solopasha/hyprland
-sudo dnf install -y neovim kitty zsh python3-pip trash-cli wine gimp audacity redshift lazygit waypaper gtk-murrine-engine
+sudo dnf install -y neovim kitty zsh python3-pip trash-cli wine gimp audacity redshift lazygit waypaper gtk-murrine-engine i3
 
 echo "Enabling RPM fusion repoistory"
 sudo dnf install -y \
@@ -91,6 +97,8 @@ check_if_program_installed "pyright" || pip install pyright
 check_if_program_installed "desktopeditors" || install_onlyoffice
 
 check_if_program_installed "rust-analyzer" || rustup component add rust-analyzer
+
+check_if_program_installed "i3lock-fancy" || install_i3lock_fancy
 
 # font
 mkdir -p ~/.local/share/fonts
