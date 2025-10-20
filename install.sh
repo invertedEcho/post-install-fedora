@@ -14,11 +14,6 @@ check_if_program_installed() {
 	fi
 }
 
-install_spotify() {
-	sudo dnf install -y lpf-spotify-client
-	lpf update
-}
-
 install_lua_language_server() {
 	wget https://github.com/LuaLS/lua-language-server/releases/download/3.15.0/lua-language-server-3.15.0-linux-x64.tar.gz mkdir -p lua-language-server
 	cd lua-language-server
@@ -79,8 +74,6 @@ sudo dnf install -y \
 sudo dnf install -y \
   https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
-
-check_if_program_installed "spotify" || install_spotify
 
 check_if_program_installed "lua-language-server" || install_lua_language_server
 
