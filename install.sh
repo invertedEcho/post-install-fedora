@@ -65,7 +65,7 @@ fi
 
 sudo dnf copr enable -y dejan/lazygit
 sudo dnf copr enable -y solopasha/hyprland
-sudo dnf install -y neovim kitty zsh python3-pip trash-cli wine gimp audacity redshift lazygit waypaper gtk-murrine-engine i3
+sudo dnf install -y neovim kitty zsh python3-pip trash-cli wine gimp audacity redshift lazygit waypaper gtk-murrine-engine hyprland gammastep
 
 echo "Enabling RPM fusion repoistory"
 sudo dnf install -y \
