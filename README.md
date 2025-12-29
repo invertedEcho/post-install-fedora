@@ -10,6 +10,16 @@ After installing fedora, run the script to install all needed software
 
 ## misc
 
+- Don't require username, only password on tty1 login:
+
+`/etc/systemd/system/getty@tty1.service.d/skip-username.conf`
+```
+[Service]
+ExecStart=
+ExecStart=-/sbin/agetty -o '-p -- invertedecho' --noclear --skip-login - $TERM
+```
+`sudo systemctl enable getty@tty1`
+
 - Setting up gdm display configuration
   - Change display settings in gnome-settings
   - Copy over monitors.xml into gdm config directory:
