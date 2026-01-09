@@ -1,7 +1,6 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 
-# Functions for installing programs
 check_if_program_installed() {
 	local command_name=$1
 	if ! command -v $command_name >/dev/null 2>&1
@@ -65,7 +64,7 @@ fi
 
 sudo dnf copr enable -y dejan/lazygit
 sudo dnf copr enable -y solopasha/hyprland
-sudo dnf install -y neovim kitty zsh python3-pip trash-cli wine gimp audacity redshift lazygit waypaper gtk-murrine-engine hyprland gammastep
+sudo dnf install -y neovim kitty zsh python3-pip trash-cli wine gimp audacity redshift lazygit waypaper gtk-murrine-engine hyprland gammastep swww thunderbird
 
 echo "Enabling RPM fusion repoistory"
 sudo dnf install -y \
