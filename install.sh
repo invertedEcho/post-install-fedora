@@ -40,6 +40,12 @@ install_i3lock_fancy() {
 	sudo make install
 }
 
+install_feishin() {
+  cd ~/.local/bin/
+  curl 'https://raw.githubusercontent.com/jeffvli/feishin/refs/heads/development/install-feishin-appimage' | sh -s -- "/home/invertedecho/.local/bin"
+  cd -
+}
+
 # Base stuff
 if [ $SHELL != "/usr/bin/zsh" ]; then
 	chsh -s /usr/bin/zsh
@@ -92,9 +98,16 @@ check_if_program_installed "rust-analyzer" || rustup component add rust-analyzer
 
 check_if_program_installed "i3lock-fancy" || install_i3lock_fancy
 
+if [ ! -e ~/.local/bin/Feishin-linux-x86_64.AppImage ]
+then
+  echo "Feishin not installed, installing..."
+  install_feishin
+fi
+
 # font
 mkdir -p ~/.local/share/fonts
-if [ ! -f /home/invertedecho/.local/share/fonts/JetBrainsMonoNLNerdFontMono-Regular.ttf ]; then
+if [ ! -f /home/invertedecho/.local/share/fonts/JetBrainsMonoNLNerdFontMono-Regular.ttf ]
+then
 	echo "Installing JetBrainsMonoNerdFont"
 	cd ~/.local/share/fonts
 	curl -fLO https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/JetBrainsMono/NoLigatures/Regular/JetBrainsMonoNLNerdFontMono-Regular.ttf
