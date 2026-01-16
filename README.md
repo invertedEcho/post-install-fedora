@@ -1,12 +1,10 @@
-# post-install-fedora
+# post-install-linux
 
 ## Setup
 
-After installing fedora, run the script to install all needed software
-
-```bash
-./install.sh
-```
+Depending on whether installing debian or fedora, run either
+- ./post-install-debian.sh
+- ./post-install-fedora.sh
 
 ## misc
 
@@ -37,5 +35,5 @@ ExecStart=-/sbin/agetty -o '-p -- invertedecho' --noclear --skip-login - $TERM
     ```
   - add to `/etc/fstab`
     ```bash
-    //jakobs-raspberrypi.local/Share /mnt/smbshare cifs credentials=/etc/samba/credentials,iocharset=utf8,uid=1000,gid=1000,file_mode=0664,dir_mode=0775 0 0
+    //jakobs-homeserver.local/Share /mnt/smbshare cifs credentials=/etc/samba/credentials,iocharset=utf8,uid=1000,gid=1000,file_mode=0664,dir_mode=0775 0 0
     ```
