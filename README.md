@@ -37,3 +37,9 @@ ExecStart=-/sbin/agetty -o '-p -- invertedecho' --noclear --skip-login - $TERM
     ```bash
     //jakobs-homeserver.local/Share /mnt/smbshare cifs credentials=/etc/samba/credentials,iocharset=utf8,uid=1000,gid=1000,file_mode=0664,dir_mode=0775 0 0
     ```
+
+- proper permission on ntfs mount:
+  - add to /etc/fstab
+    ```
+    UUID=<UUID>  <mnt-path>  ntfs-3g  uid=1000,gid=1000,umask=022,windows_names  0  0
+    ```
