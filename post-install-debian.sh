@@ -65,7 +65,7 @@ if grep -q laptop /etc/hostname; then
 fi
 
 # sudo dnf copr enable -y solopasha/hyprland
-sudo apt install -y kitty zsh python3-pip trash-cli wine gimp audacity lazygit curl black pipx zsh-syntax-highlighting zsh-autosuggestions zoxide
+sudo apt install -y kitty zsh python3-pip trash-cli wine gimp audacity lazygit curl black pipx zsh-syntax-highlighting zsh-autosuggestions zoxide tmux
 
 # Base stuff
 if [ $SHELL != "/usr/bin/zsh" ]; then

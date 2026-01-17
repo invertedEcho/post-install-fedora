@@ -46,13 +46,6 @@ install_feishin() {
   cd -
 }
 
-# Base stuff
-if [ $SHELL != "/usr/bin/zsh" ]; then
-	chsh -s /usr/bin/zsh
-else
-	echo "shell already set to zsh, skipping..."
-fi
-
 mkdir -p ~/.local/bin
 mkdir -p ~/dev
 mkdir -p ~/.config/gtk-4.0
@@ -70,7 +63,15 @@ fi
 
 sudo dnf copr enable -y dejan/lazygit
 sudo dnf copr enable -y solopasha/hyprland
-sudo dnf install -y neovim kitty zsh python3-pip trash-cli wine gimp audacity redshift lazygit waypaper gtk-murrine-engine hyprland gammastep swww thunderbird
+sudo dnf install -y neovim kitty zsh python3-pip trash-cli wine gimp audacity redshift lazygit waypaper gtk-murrine-engine hyprland gammastep swww thunderbird tmux
+
+# Base stuff
+if [ $SHELL != "/usr/bin/zsh" ]; then
+	chsh -s /usr/bin/zsh
+else
+	echo "shell already set to zsh, skipping..."
+fi
+
 
 echo "Enabling RPM fusion repoistory"
 sudo dnf install -y \
