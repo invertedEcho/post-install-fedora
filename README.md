@@ -1,10 +1,8 @@
-# post-install-linux
+# post-install-fedora
 
 ## Setup
 
-Depending on whether installing debian or fedora, run either
-- ./post-install-debian.sh
-- ./post-install-fedora.sh
+Run `./run.sh` in a terminal of your choice
 
 ## misc
 

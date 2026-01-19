@@ -31,13 +31,7 @@ install_cargo() {
 
 install_onlyoffice() {
 	wget https://github.com/ONLYOFFICE/DesktopEditors/releases/latest/download/onlyoffice-desktopeditors.x86_64.rpm -O /tmp/onlyoffice.rpm
-	sudo dnf install /tmp/onlyoffice.rpm
-}
-
-install_i3lock_fancy() {
-	git clone https://github.com/meskarune/i3lock-fancy.git
-	cd i3lock-fancy
-	sudo make install
+	sudo dnf install -y /tmp/onlyoffice.rpm
 }
 
 install_feishin() {
@@ -63,7 +57,7 @@ fi
 
 sudo dnf copr enable -y dejan/lazygit
 sudo dnf copr enable -y solopasha/hyprland
-sudo dnf install -y neovim kitty zsh python3-pip trash-cli wine gimp audacity redshift lazygit waypaper gtk-murrine-engine hyprland gammastep swww thunderbird tmux
+sudo dnf install -y neovim kitty zsh python3-pip trash-cli wine gimp audacity redshift lazygit waypaper gtk-murrine-engine hyprland gammastep swww tmux wget rofi waybar nautilus firefox hyprpolkitagent
 
 # Base stuff
 if [ $SHELL != "/usr/bin/zsh" ]; then
@@ -81,7 +75,8 @@ sudo dnf install -y \
   https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
 
-check_if_program_installed "lua-language-server" || install_lua_language_server
+# FIXME: this is broken
+# check_if_program_installed "lua-language-server" || install_lua_language_server
 
 check_if_program_installed "cargo" || install_cargo
 
@@ -96,8 +91,6 @@ check_if_program_installed "pyright" || pip install pyright
 check_if_program_installed "desktopeditors" || install_onlyoffice
 
 check_if_program_installed "rust-analyzer" || rustup component add rust-analyzer
-
-check_if_program_installed "i3lock-fancy" || install_i3lock_fancy
 
 if [ ! -e ~/.local/bin/Feishin-linux-x86_64.AppImage ]
 then
@@ -157,9 +150,6 @@ if [ ! -d "/home/invertedecho/.config/nvim" ]; then
 	echo "nvim-config not existing, setting up"
 	ln -s /home/invertedecho/dev/nvim-config /home/invertedecho/.config/nvim
 fi
-
-gsettings set org.gnome.desktop.wm.preferences button-layout ":minimize,maximize,close"
-gsettings set org.gnome.desktop.wm.preferences resize-with-right-button true
 
 echo "Post-install sucessfully completed!"
 echo "Please log-out and log in to apply all changes."
