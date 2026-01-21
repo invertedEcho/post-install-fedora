@@ -20,7 +20,7 @@ install_lua_language_server() {
 	cd ..
 	rm lua-language-server-3.15.0-linux-x64.tar.gz
 	mv lua-language-server ~/.local/bin/
-	echo "export PATH=$PATH:/home/invertedecho/.local/bin/lua-language-server/bin" >> ~/.zshrc
+	echo "export PATH=$PATH:/home/$USER/.local/bin/lua-language-server/bin" >> ~/.zshrc
 	rm -r lua-language-server
 }
 
@@ -36,7 +36,7 @@ install_onlyoffice() {
 
 install_feishin() {
   cd ~/.local/bin/
-  curl 'https://raw.githubusercontent.com/jeffvli/feishin/refs/heads/development/install-feishin-appimage' | sh -s -- "/home/invertedecho/.local/bin"
+  curl 'https://raw.githubusercontent.com/jeffvli/feishin/refs/heads/development/install-feishin-appimage' | sh -s -- "/home/$USER/.local/bin"
   cd -
 }
 
@@ -108,7 +108,7 @@ fi
 
 # font
 mkdir -p ~/.local/share/fonts
-if [ ! -f /home/invertedecho/.local/share/fonts/JetBrainsMonoNLNerdFontMono-Regular.ttf ]
+if [ ! -f /home/$USER/.local/share/fonts/JetBrainsMonoNLNerdFontMono-Regular.ttf ]
 then
 	echo "Installing JetBrainsMonoNerdFont"
 	cd ~/.local/share/fonts
@@ -131,7 +131,7 @@ else
 fi
 
 # dotfiles
-if [ ! -d "/home/invertedecho/dev/dotfiles" ]; then
+if [ ! -d "/home/$USER/dev/dotfiles" ]; then
 	git clone https://github.com/invertedEcho/dotfiles.git ~/dev/dotfiles
 fi
 
@@ -141,7 +141,7 @@ rm -f ~/.zshrc
 ./install
 cd -
 
-if [ ! -d "/home/invertedecho/dev/Gruvbox-GTK-Theme" ]; then
+if [ ! -d "/home/$USER/dev/Gruvbox-GTK-Theme" ]; then
 	git clone https://github.com/Fausto-Korpsvart/Gruvbox-GTK-Theme ~/dev/Gruvbox-GTK-Theme
 fi
 
@@ -150,13 +150,13 @@ cd ~/dev/Gruvbox-GTK-Theme/themes
 cp -r ~/.themes/Gruvbox-Dark/gtk-4.0/* ~/.config/gtk-4.0/
 cd -
 
-if [ ! -d "/home/invertedecho/dev/nvim-config" ]; then
+if [ ! -d "/home/$USER/dev/nvim-config" ]; then
 	git clone https://github.com/invertedEcho/nvim-config.git ~/dev/nvim-config
 fi
 
-if [ ! -d "/home/invertedecho/.config/nvim" ]; then
+if [ ! -d "/home/$USER/.config/nvim" ]; then
 	echo "nvim-config not existing, setting up"
-	ln -s /home/invertedecho/dev/nvim-config /home/invertedecho/.config/nvim
+	ln -s /home/$USER/dev/nvim-config /home/$USER/.config/nvim
 fi
 
 # virtual machine

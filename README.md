@@ -12,7 +12,7 @@ Run `./run.sh` in a terminal of your choice
 ```
 [Service]
 ExecStart=
-ExecStart=-/sbin/agetty -o '-p -- invertedecho' --noclear --skip-login - $TERM
+ExecStart=-/sbin/agetty -o '-p -- <replace with username>' --noclear --skip-login - $TERM
 ```
 `sudo systemctl enable getty@tty1`
 
@@ -20,7 +20,7 @@ ExecStart=-/sbin/agetty -o '-p -- invertedecho' --noclear --skip-login - $TERM
   - Change display settings in gnome-settings
   - Copy over monitors.xml into gdm config directory:
     ```
-    sudo cp /home/user/.config/monitors.xml /var/lib/gdm/.config/
+    sudo cp /home/$USER/.config/monitors.xml /var/lib/gdm/.config/
     ```
 
 - auto mount smb share
