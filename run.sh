@@ -40,6 +40,12 @@ install_feishin() {
   cd -
 }
 
+install_proton_vpn() {
+  wget "https://repo.protonvpn.com/fedora-$(cat /etc/fedora-release | cut -d' ' -f 3)-stable/protonvpn-stable-release/protonvpn-stable-release-1.0.3-1.noarch.rpm"
+  sudo dnf install -y ./protonvpn-stable-release-1.0.3-1.noarch.rpm
+  sudo dnf install -y proton-vpn-gnome-desktop
+}
+
 mkdir -p ~/.local/bin
 mkdir -p ~/dev
 mkdir -p ~/.config/gtk-4.0
@@ -57,7 +63,7 @@ fi
 
 sudo dnf copr enable -y dejan/lazygit
 sudo dnf copr enable -y solopasha/hyprland
-sudo dnf install -y neovim kitty zsh python3-pip trash-cli wine gimp audacity redshift lazygit waypaper gtk-murrine-engine hyprland gammastep swww tmux wget rofi waybar nautilus firefox hyprpolkitagent
+sudo dnf install -y neovim kitty zsh python3-pip trash-cli wine gimp audacity redshift lazygit waypaper gtk-murrine-engine hyprland gammastep swww tmux wget rofi waybar nautilus firefox hyprpolkitagent hyprlock pamixer wlogout
 
 # Base stuff
 if [ $SHELL != "/usr/bin/zsh" ]; then
@@ -92,6 +98,8 @@ check_if_program_installed "desktopeditors" || install_onlyoffice
 
 check_if_program_installed "rust-analyzer" || rustup component add rust-analyzer
 
+check_if_program_installed "protonvpn-app" || install_proton_vpn
+
 if [ ! -e ~/.local/bin/Feishin-linux-x86_64.AppImage ]
 then
   echo "Feishin not installed, installing..."
@@ -111,7 +119,7 @@ else
 fi
 
 # zsh
-sudo dnf install zsh-syntax-highlighting zsh-autosuggestions zoxide
+sudo dnf install -y zsh-syntax-highlighting zsh-autosuggestions zoxide
 mkdir -p "$HOME/.zsh"
 
 if ! npm list -g | grep pure-prompt
@@ -150,6 +158,10 @@ if [ ! -d "/home/invertedecho/.config/nvim" ]; then
 	echo "nvim-config not existing, setting up"
 	ln -s /home/invertedecho/dev/nvim-config /home/invertedecho/.config/nvim
 fi
+
+# virtual machine
+sudo dnf install -y virt-manager
+sudo systemctl enable --now libvirtd
 
 echo "Post-install sucessfully completed!"
 echo "Please log-out and log in to apply all changes."
