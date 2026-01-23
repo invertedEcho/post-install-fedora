@@ -14,14 +14,13 @@ check_if_program_installed() {
 }
 
 install_lua_language_server() {
-	wget https://github.com/LuaLS/lua-language-server/releases/download/3.15.0/lua-language-server-3.15.0-linux-x64.tar.gz mkdir -p lua-language-server
+	wget 'https://github.com/LuaLS/lua-language-server/releases/download/3.15.0/lua-language-server-3.15.0-linux-x64.tar.gz'
+	mkdir -p lua-language-server
 	cd lua-language-server
 	tar xf ../lua-language-server-3.15.0-linux-x64.tar.gz
 	cd ..
-	rm lua-language-server-3.15.0-linux-x64.tar.gz
 	mv lua-language-server ~/.local/bin/
-	echo "export PATH=$PATH:/home/$USER/.local/bin/lua-language-server/bin" >> ~/.zshrc
-	rm -r lua-language-server
+	rm lua-language-server-3.15.0-linux-x64.tar.gz
 }
 
 install_cargo() {
@@ -97,8 +96,7 @@ echo "Enabling RPM fusion repoistory"
     https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 fi
 
-# FIXME: this is broken
-# check_if_program_installed "lua-language-server" || install_lua_language_server
+check_if_program_installed "lua-language-server" || install_lua_language_server
 
 check_if_program_installed "cargo" || install_cargo
 
