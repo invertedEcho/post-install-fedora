@@ -61,9 +61,23 @@ if grep -q laptop /etc/hostname; then
 	sudo dnf install -y brightnessctl
 fi
 
-sudo dnf copr enable -y dejan/lazygit
-sudo dnf copr enable -y solopasha/hyprland
-sudo dnf install -y neovim kitty zsh python3-pip trash-cli wine gimp audacity redshift lazygit waypaper gtk-murrine-engine hyprland gammastep swww tmux wget rofi waybar nautilus firefox hyprpolkitagent hyprlock pamixer wlogout
+if dnf copr list | grep "lazygit"
+then
+  echo "lazygit copr repository already enabled, skipping..."
+else
+  echo "Enabling lazygit copr repository"
+  sudo dnf copr enable -y dejan/lazygit
+fi
+
+if dnf copr list | grep "hyprland"
+then
+  echo "hyprland copr repository already enabled, skipping..."
+else
+  echo "Enabling hyprland copr repository"
+  sudo dnf copr enable -y solopasha/hyprland
+fi
+
+sudo dnf install -y neovim kitty zsh python3-pip trash-cli wine gimp audacity redshift lazygit waypaper gtk-murrine-engine hyprland gammastep swww tmux wget rofi waybar nautilus firefox hyprpolkitagent hyprlock pamixer wlogout blender pavucontrol
 
 # Base stuff
 if [ $SHELL != "/usr/bin/zsh" ]; then
@@ -72,14 +86,16 @@ else
 	echo "shell already set to zsh, skipping..."
 fi
 
-
+if sudo dnf repolist | grep "rpmfusion"
+then
+  echo "RPM fusion repository already enabled, skipping..."
+else
 echo "Enabling RPM fusion repoistory"
-sudo dnf install -y \
-  https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
-
-sudo dnf install -y \
-  https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-
+  sudo dnf install -y \
+    https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+  sudo dnf install -y \
+    https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+fi
 
 # FIXME: this is broken
 # check_if_program_installed "lua-language-server" || install_lua_language_server
