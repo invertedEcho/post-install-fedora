@@ -76,7 +76,7 @@ else
   sudo dnf copr enable -y solopasha/hyprland
 fi
 
-sudo dnf install -y neovim kitty zsh python3-pip trash-cli wine gimp audacity redshift lazygit waypaper gtk-murrine-engine hyprland gammastep swww tmux wget rofi waybar nautilus firefox hyprpolkitagent hyprlock pamixer wlogout blender pavucontrol
+sudo dnf install -y neovim kitty zsh python3-pip trash-cli wine gimp audacity redshift lazygit waypaper gtk-murrine-engine hyprland gammastep swww tmux wget rofi waybar nautilus firefox hyprpolkitagent hyprlock pamixer wlogout blender pavucontrol google-noto-color-emoji-fonts rofimoji gvfs-smb swaync
 
 # Base stuff
 if [ $SHELL != "/usr/bin/zsh" ]; then
