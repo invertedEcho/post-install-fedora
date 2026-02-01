@@ -45,6 +45,11 @@ install_proton_vpn() {
   sudo dnf install -y proton-vpn-gnome-desktop
 }
 
+# toml lsp server
+intsall_tombi() {
+  curl -fsSL https://tombi-toml.github.io/tombi/install.sh | sh
+}
+
 mkdir -p ~/.local/bin
 mkdir -p ~/dev
 mkdir -p ~/.config/gtk-4.0
@@ -113,6 +118,8 @@ check_if_program_installed "desktopeditors" || install_onlyoffice
 check_if_program_installed "rust-analyzer" || rustup component add rust-analyzer
 
 check_if_program_installed "protonvpn-app" || install_proton_vpn
+
+check_if_program_installed "tombi" || install_tombi
 
 if [ ! -e ~/.local/bin/Feishin-linux-x86_64.AppImage ]
 then
