@@ -46,7 +46,7 @@ install_proton_vpn() {
 }
 
 # toml lsp server
-intsall_tombi() {
+install_tombi() {
   curl -fsSL https://tombi-toml.github.io/tombi/install.sh | sh
 }
 
