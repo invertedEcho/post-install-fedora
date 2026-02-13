@@ -81,7 +81,15 @@ else
   sudo dnf copr enable -y solopasha/hyprland
 fi
 
-sudo dnf install -y neovim kitty zsh python3-pip trash-cli wine gimp audacity redshift lazygit waypaper gtk-murrine-engine hyprland gammastep swww tmux wget rofi waybar nautilus firefox hyprpolkitagent hyprlock pamixer wlogout blender pavucontrol google-noto-color-emoji-fonts rofimoji gvfs-smb swaync
+if dnf repolist | grep "gh-cli"
+then
+  echo "Github CLI repo already added, skipping..."
+else
+  echo "Adding Github CLI repo"
+  sudo dnf config-manager addrepo --from-repofile=https://cli.github.com/packages/rpm/gh-cli.repo
+fi
+
+sudo dnf install -y neovim kitty zsh python3-pip trash-cli wine gimp audacity redshift lazygit waypaper gtk-murrine-engine hyprland gammastep swww tmux wget rofi waybar nautilus firefox hyprpolkitagent hyprlock pamixer wlogout blender pavucontrol google-noto-color-emoji-fonts rofimoji gvfs-smb swaync gh
 
 # Base stuff
 if [ $SHELL != "/usr/bin/zsh" ]; then
