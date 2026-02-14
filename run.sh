@@ -170,15 +170,6 @@ rm -f ~/.zshrc
 ./install
 cd -
 
-if [ ! -d "/home/$USER/dev/Gruvbox-GTK-Theme" ]; then
-	git clone https://github.com/Fausto-Korpsvart/Gruvbox-GTK-Theme ~/dev/Gruvbox-GTK-Theme
-fi
-
-cd ~/dev/Gruvbox-GTK-Theme/themes
-./install.sh
-cp -r ~/.themes/Gruvbox-Dark/gtk-4.0/* ~/.config/gtk-4.0/
-cd -
-
 if [ ! -d "/home/$USER/dev/nvim-config" ]; then
 	git clone https://github.com/invertedEcho/nvim-config.git ~/dev/nvim-config
 fi
