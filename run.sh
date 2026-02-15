@@ -89,7 +89,7 @@ else
   sudo dnf config-manager addrepo --from-repofile=https://cli.github.com/packages/rpm/gh-cli.repo
 fi
 
-sudo dnf install -y neovim kitty zsh python3-pip trash-cli wine gimp audacity redshift lazygit waypaper gtk-murrine-engine hyprland gammastep swww tmux wget rofi waybar nautilus firefox hyprpolkitagent hyprlock pamixer wlogout blender pavucontrol google-noto-color-emoji-fonts rofimoji gvfs-smb swaync gh
+sudo dnf install -y neovim kitty zsh python3-pip trash-cli wine gimp audacity redshift lazygit waypaper gtk-murrine-engine hyprland gammastep swww tmux wget rofi waybar nautilus firefox hyprpolkitagent hyprlock pamixer wlogout blender pavucontrol google-noto-color-emoji-fonts rofimoji gvfs-smb swaync gh pipewire-codec-aptx
 
 # Base stuff
 if [ $SHELL != "/usr/bin/zsh" ]; then
