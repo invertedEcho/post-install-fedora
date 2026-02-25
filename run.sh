@@ -89,7 +89,15 @@ else
   sudo dnf config-manager addrepo --from-repofile=https://cli.github.com/packages/rpm/gh-cli.repo
 fi
 
-sudo dnf install -y neovim kitty zsh python3-pip trash-cli wine gimp audacity redshift lazygit waypaper gtk-murrine-engine hyprland gammastep swww tmux wget rofi waybar nautilus firefox hyprpolkitagent hyprlock pamixer wlogout blender pavucontrol google-noto-color-emoji-fonts rofimoji gvfs-smb swaync gh pipewire-codec-aptx
+if dnf repolist | grep "cloudflared"
+then
+  echo "cloudflared repository already added, skipping..."
+else
+  echo "Adding cloudflared repository"
+  curl -fsSl https://pkg.cloudflare.com/cloudflared.repo | sudo tee /etc/yum.repos.d/cloudflared.repo
+fi
+
+sudo dnf install -y neovim kitty zsh python3-pip trash-cli wine gimp audacity redshift lazygit waypaper gtk-murrine-engine hyprland gammastep swww tmux wget rofi waybar nautilus firefox hyprpolkitagent hyprlock pamixer wlogout blender pavucontrol google-noto-color-emoji-fonts rofimoji gvfs-smb swaync gh pipewire-codec-aptx cloudflared
 
 # Base stuff
 if [ $SHELL != "/usr/bin/zsh" ]; then
